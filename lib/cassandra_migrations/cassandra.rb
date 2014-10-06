@@ -1,7 +1,9 @@
 # encoding: utf-8
 
 require 'yaml'
-require 'cql'
+require 'cassandra'
+# require 'cassandra_migrations/cql_rb_wrapper'
+Cql = Cassandra
 require 'cassandra_migrations/cassandra/queries'
 require 'cassandra_migrations/cassandra/query_result'
 require 'cassandra_migrations/cassandra/keyspace_operations'
@@ -50,7 +52,7 @@ module CassandraMigrations
 
       begin
         client.use(keyspace)
-      rescue Cql::QueryError # keyspace does not exist
+      rescue Cql::Errors::QueryError # keyspace does not exist
         raise Errors::UnexistingKeyspaceError, keyspace
       end
     end
