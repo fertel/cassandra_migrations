@@ -25,7 +25,7 @@ module CassandraMigrations
         config = Config.configurations[env]
         begin
           execute("DROP KEYSPACE #{config.keyspace}")
-        rescue Cql::QueryError
+        rescue Cql::Errors::QueryError
           raise Errors::UnexistingKeyspaceError, config.keyspace
         end
       end
